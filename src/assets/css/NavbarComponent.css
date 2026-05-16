@@ -1,0 +1,131 @@
+/* NAVBAR */
+.navbar {
+    height: 70px;
+    padding: 0 20px;
+
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+
+    background: #111;
+    color: white;
+
+    position: relative;
+    z-index: 30;
+}
+
+.logo img {
+    height: 40px;
+}
+
+.title {
+    justify-self: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.skill {
+    color: #005BBC;
+}
+
+.swap {
+    color: #FF5733;
+}
+
+/* HAMBURGER */
+.menu-btn {
+    justify-self: end;
+
+    width: 40px;
+    height: 40px;
+
+    background: none;
+    border: none;
+    cursor: pointer;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 6px;
+
+    padding: 0;
+}
+
+.menu-btn span {
+    width: 28px;
+    height: 3px;
+
+    background: white;
+    border-radius: 999px;
+
+    transition: all 0.3s ease;
+}
+
+/* ANIMAZIONE X */
+.menu-btn.active span:nth-child(1) {
+    transform: rotate(45deg) translate(6px, 6px);
+}
+
+.menu-btn.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.menu-btn.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(7px, -7px);
+}
+
+/* OVERLAY */
+.overlay {
+    position: fixed;
+    inset: 0;
+
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(4px);
+
+    opacity: 0;
+    pointer-events: none;
+
+    transition: opacity 0.3s ease;
+
+    z-index: 10;
+}
+
+.overlay.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+/* SIDEBAR */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: -280px;
+
+    width: 280px;
+    height: 100vh;
+
+    background: white;
+
+    display: flex;
+    flex-direction: column;
+
+    padding: 100px 24px;
+    gap: 24px;
+
+    box-shadow: 4px 0 20px rgba(0, 0, 0, 0.15);
+
+    transition: left 0.3s ease;
+
+    z-index: 20;
+}
+
+.sidebar.active {
+    left: 0;
+}
+
+.sidebar a {
+    text-decoration: none;
+    color: #111;
+    font-size: 1.1rem;
+    font-weight: 500;
+}
