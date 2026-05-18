@@ -21,7 +21,7 @@ function NavbarComponent() {
         <>
             <nav className="navbar">
                 <div className="logo">
-                    <img src="/nuovo.png" alt="Logo" />
+                    <img src="/logo.png" alt="Logo" />
                 </div>
 
                 <div className="title">
