@@ -25,11 +25,11 @@
 }
 
 .skill {
-    color: #005BBC;
+    color: #147BFD;
 }
 
 .swap {
-    color: #FF5733;
+    color: #FF7900;
 }
 
 /* HAMBURGER */
@@ -99,33 +99,52 @@
 .sidebar {
     position: fixed;
     top: 0;
-    left: -280px;
+    left: 0;
 
-    width: 280px;
     height: 100vh;
-
     background: white;
-
     display: flex;
     flex-direction: column;
-
-    padding: 100px 24px;
-    gap: 24px;
-
+    padding: 100px 12px;
+    gap: 1rem;
     box-shadow: 4px 0 20px rgba(0, 0, 0, 0.15);
-
-    transition: left 0.3s ease;
-
+    transition: width 0.3s ease;
     z-index: 20;
 }
 
 .sidebar.active {
-    left: 0;
+    padding: 100px 20px;
 }
 
 .sidebar a {
+    display: flex;
+    align-items: center;
+    gap: 14px;
     text-decoration: none;
     color: #111;
-    font-size: 1.1rem;
+    font-size: 1.05rem;
     font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.sidebar i {
+    min-width: 24px;
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+.sidebar .label {
+    opacity: 0;
+    transform: translateX(-6px);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    pointer-events: none;
+    display: none;
+}
+
+.sidebar.active .label {
+    display: inline;
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: auto;
 }

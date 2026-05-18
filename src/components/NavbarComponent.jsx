@@ -1,25 +1,18 @@
 import '../assets/css/NavbarComponent.css';
 import { useState, useEffect } from "react";
+import { NavLink } from "react-router-dom";
 
 function NavbarComponent() {
     const [open, setOpen] = useState(false);
 
-    // Chiusura con ESC
     useEffect(() => {
         const handleEsc = (e) => {
-            if (e.key === "Escape") {
-                setOpen(false);
-            }
+            if (e.key === "Escape") setOpen(false);
         };
-
         window.addEventListener("keydown", handleEsc);
-
-        return () => {
-            window.removeEventListener("keydown", handleEsc);
-        };
+        return () => window.removeEventListener("keydown", handleEsc);
     }, []);
 
-    // Blocca scroll body quando il menu è aperto
     useEffect(() => {
         document.body.style.overflow = open ? "hidden" : "auto";
     }, [open]);
@@ -28,7 +21,7 @@ function NavbarComponent() {
         <>
             <nav className="navbar">
                 <div className="logo">
-                    <img src="/Logo SkillSwap SS copia.png" alt="Logo" />
+                    <img src="/nuovo.png" alt="Logo" />
                 </div>
 
                 <div className="title">
@@ -39,24 +32,45 @@ function NavbarComponent() {
                     className={`menu-btn ${open ? "active" : ""}`}
                     onClick={() => setOpen(!open)}
                 >
-                    <span />
-                    <span />
-                    <span />
+                    <span></span><span></span><span></span>
                 </button>
             </nav>
 
-            {/* Overlay */}
-            <div
-                className={`overlay ${open ? "active" : ""}`}
-                onClick={() => setOpen(false)}
-            />
+            <div className={`overlay ${open ? "active" : ""}`} onClick={() => setOpen(false)} />
 
-            {/* Sidebar */}
             <aside className={`sidebar ${open ? "active" : ""}`}>
-                <a href="/">Home</a>
-                <a href="/">Chi siamo</a>
-                <a href="/">Servizi</a>
-                <a href="/">Contatti</a>
+                <NavLink to="/" className="nav-item">
+                    {({ isActive }) => (
+                        <>
+                            <i className={`bi ${isActive ? "bi-house-fill" : "bi-house"}`}></i>
+                            <span className="label">Home</span>
+                        </>
+                    )}
+                </NavLink>
+                <NavLink to="/profile" className="nav-item">
+                    {({ isActive }) => (
+                        <>
+                            <i className={`bi ${isActive ? "bi-person-fill" : "bi-person"}`}></i>
+                            <span className="label">Profilo</span>
+                        </>
+                    )}
+                </NavLink>
+                <NavLink to="/search" className="nav-item">
+                    {({ isActive }) => (
+                        <>
+                            <i className={`bi ${isActive ? "bi-binoculars-fill" : "bi-binoculars"}`}></i>
+                            <span className="label">Ricerca</span>
+                        </>
+                    )}
+                </NavLink>
+                <NavLink to="/chat" className="nav-item">
+                    {({ isActive }) => (
+                        <>
+                            <i className={`bi ${isActive ? "bi-chat-right-text-fill" : "bi-chat-right-text"}`}></i>
+                            <span className="label">Chat</span>
+                        </>
+                    )}
+                </NavLink>
             </aside>
         </>
     );
