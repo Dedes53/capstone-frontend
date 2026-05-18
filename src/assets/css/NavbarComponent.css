@@ -14,13 +14,17 @@
     z-index: 30;
 }
 
-.logo img {
+.logo {
     height: 40px;
+}
+
+.logo img {
+    height: 100%;
 }
 
 .title {
     justify-self: center;
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     font-weight: bold;
 }
 
