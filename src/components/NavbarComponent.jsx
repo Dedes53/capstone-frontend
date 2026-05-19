@@ -51,7 +51,7 @@ function NavbarComponent() {
                     {({ isActive }) => (
                         <>
                             <i className={`bi ${isActive ? "bi-person-fill" : "bi-person"}`}></i>
-                            <span className="label">Profilo</span>
+                            <span className="label">Profile</span>
                         </>
                     )}
                 </NavLink>
@@ -59,7 +59,7 @@ function NavbarComponent() {
                     {({ isActive }) => (
                         <>
                             <i className={`bi ${isActive ? "bi-binoculars-fill" : "bi-binoculars"}`}></i>
-                            <span className="label">Ricerca</span>
+                            <span className="label">Search</span>
                         </>
                     )}
                 </NavLink>
