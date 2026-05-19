@@ -10,9 +10,19 @@ body {
   --sidebar-closed: 72px;
 }
 
-.app-content {
+/* .app-content {
   margin-left: var(--sidebar-closed);
   min-height: calc(100vh - 70px);
   padding: 16px;
   box-sizing: border-box;
+} */
+
+.app-content {
+  margin-left: 72px;
+  /* spazio sidebar chiusa */
+  width: calc(100% - 72px);
+  /* riduce spazio reale */
+  min-height: calc(100vh - 70px);
+  box-sizing: border-box;
+  padding: 16px;
 }
