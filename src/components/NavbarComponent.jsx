@@ -39,6 +39,14 @@ function NavbarComponent() {
             <div className={`overlay ${open ? "active" : ""}`} onClick={() => setOpen(false)} />
 
             <aside className={`sidebar ${open ? "active" : ""}`}>
+                <NavLink to="/login" className="nav-item">
+                    {({ isActive }) => (
+                        <>
+                            <i className={`bi ${isActive ? "bi-door-open-fill" : "bi-door-open"}`}></i>
+                            <span className="label">Login</span>
+                        </>
+                    )}
+                </NavLink>
                 <NavLink to="/" className="nav-item">
                     {({ isActive }) => (
                         <>
