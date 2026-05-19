@@ -100,11 +100,13 @@
 }
 
 /* SIDEBAR */
+
 .sidebar {
     position: fixed;
     top: 0;
     left: 0;
 
+    width: 25px;
     height: 100vh;
     background: white;
     display: flex;
@@ -112,11 +114,12 @@
     padding: 100px 12px;
     gap: 1rem;
     box-shadow: 4px 0 20px rgba(0, 0, 0, 0.15);
-    transition: width 0.3s ease;
+    transition: width 0.3s ease, padding 0.3s ease;
     z-index: 20;
 }
 
 .sidebar.active {
+    width: auto;
     padding: 100px 20px;
 }
 
