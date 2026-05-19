@@ -47,7 +47,7 @@ function Login() {
             if (!token) throw new Error("Token non presente nella risposta");
 
             login(token);          // Context + localStorage
-            navigate("/profilo");  // redirect dopo login
+            navigate("/profile");  // redirect dopo login
         } catch (err) {
             setError(err.message || "Errore durante il login");
         } finally {
@@ -70,7 +70,7 @@ function Login() {
                         autoComplete="username"
                         value={form.username}
                         onChange={onChange}
-                        placeholder="Inserisci username"
+                        placeholder="Username"
                         required
                     />
 
@@ -82,7 +82,7 @@ function Login() {
                         autoComplete="current-password"
                         value={form.password}
                         onChange={onChange}
-                        placeholder="Inserisci password"
+                        placeholder="Password"
                         required
                     />
 
