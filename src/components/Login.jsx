@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/UseAuth.js";
-// import "../assets/css/Login.css";
 
 function Login() {
     const navigate = useNavigate();
@@ -15,7 +14,7 @@ function Login() {
         setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
     };
 
-    const onSubmit = async (e) => {
+    const onSubmit = (e) => {
         e.preventDefault();
         setError("");
 
@@ -27,32 +26,34 @@ function Login() {
             return;
         }
 
-        try {
-            setLoading(true);
+        setLoading(true);
 
-            const resp = await fetch("http://localhost:3001/auth/login", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ username, password })
+        fetch("http://localhost:3001/auth/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ username, password }),
+        })
+            .then((resp) =>
+                resp
+                    .json()
+                    .catch(() => ({}))
+                    .then((data) => ({ ok: resp.ok, data }))
+            )
+            .then(({ ok, data }) => {
+                if (!ok) throw new Error(data.message || "Credenziali non valide");
+
+                const token = data.token || data.accessToken;
+                if (!token) throw new Error("Token non presente nella risposta");
+
+                login(token);
+                navigate("/profile");
+            })
+            .catch((err) => {
+                setError(err.message || "Errore durante il login");
+            })
+            .finally(() => {
+                setLoading(false);
             });
-
-            const data = await resp.json().catch(() => ({}));
-
-            if (!resp.ok) {
-                throw new Error(data.message || "Credenziali non valide");
-            }
-
-            // adatta se il backend restituisce nome diverso
-            const token = data.token || data.accessToken;
-            if (!token) throw new Error("Token non presente nella risposta");
-
-            login(token);          // Context + localStorage
-            navigate("/profile");  // redirect dopo login
-        } catch (err) {
-            setError(err.message || "Errore durante il login");
-        } finally {
-            setLoading(false);
-        }
     };
 
     return (
@@ -92,6 +93,15 @@ function Login() {
                         {loading ? "Accesso..." : "Login"}
                     </button>
                 </form>
+            </section>
+
+            <section>
+                <p>
+                    Non hai un account?{" "}
+                    <span className="link" onClick={() => navigate("/register")}>
+                        Registrati
+                    </span>
+                </p>
             </section>
         </main>
     );
