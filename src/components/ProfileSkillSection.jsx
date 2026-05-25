@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../context/UseAuth.js";
 import SkillCard from "./SkillCard.jsx";
+import NewSkillForm from "./NewSkillForm.jsx";
 
 function ProfileSkillSection() {
     const { token } = useAuth();
@@ -30,6 +31,18 @@ function ProfileSkillSection() {
 
     return (
         <section>
+            <div>
+                <NewSkillForm
+                    categories={["Programming", "Design", "Marketing"]}
+                    onCreated={(newSkill) => {
+                        if (newSkill.type === "OWNED") {
+                            setOwned((o) => [...o, newSkill]);
+                        } else {
+                            setWanted((w) => [...w, newSkill]);
+                        }
+                    }}
+                />
+            </div>
             <div>
                 <h2>My Skills</h2>
                 <button><i className="bi bi-plus-circle"></i></button>
