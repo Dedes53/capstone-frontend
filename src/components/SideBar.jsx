@@ -6,14 +6,8 @@ function SideBar() {
     return (
         <section>
             <aside className={`sidebar ${open ? "active" : ""}`}>
-                <NavLink to="/login" className="nav-item">
-                    {({ isActive }) => (
-                        <>
-                            <i className={`bi ${isActive ? "bi-door-open-fill" : "bi-door-open"}`}></i>
-                            <span className="label">Login</span>
-                        </>
-                    )}
-                </NavLink>
+
+
                 <NavLink to="/" className="nav-item">
                     {({ isActive }) => (
                         <>
@@ -43,6 +37,14 @@ function SideBar() {
                         <>
                             <i className={`bi ${isActive ? "bi-chat-right-text-fill" : "bi-chat-right-text"}`}></i>
                             <span className="label">Chat</span>
+                        </>
+                    )}
+                </NavLink>
+                <NavLink to="/login" className="nav-item">
+                    {({ isActive }) => (
+                        <>
+                            <i className={`bi ${isActive ? "bi-door-open-fill" : "bi-door-open"}`}></i>
+                            <span className="label">Logout</span>
                         </>
                     )}
                 </NavLink>

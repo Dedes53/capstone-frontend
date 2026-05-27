@@ -11,14 +11,14 @@ function App() {
   return (
     <>
       <NavbarComponent />
-      <main className="app-content">
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/register" element={<Register />} />
-        </Routes>
-      </main>
+
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/register" element={<Register />} />
+      </Routes>
+
     </>
   )
 }
