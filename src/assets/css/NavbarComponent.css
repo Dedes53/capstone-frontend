@@ -56,7 +56,6 @@
     color: var(--orange);
 }
 
-
 .navbar.bg-black .navbar-brand {
     color: #fff !important;
     text-decoration: none;
@@ -74,7 +73,6 @@ link base .navbar .nav-link {
     transition: color 0.2s ease;
 }
 
-
 .navbar .nav-link:hover,
 .navbar .nav-link:focus {
     color: var(--blue) !important;
@@ -82,14 +80,12 @@ link base .navbar .nav-link {
     background-color: transparent !important;
 }
 
-
 .navbar .nav-link.active,
 .navbar .nav-link.show,
 .navbar .nav-link:active {
     color: var(--orange) !important;
     opacity: 1 !important;
 }
-
 
 .navbar.bg-black .navbar-toggler {
     border-color: rgba(255, 255, 255, 0.35);
@@ -103,8 +99,8 @@ link base .navbar .nav-link {
     filter: invert(1);
 }
 
-.logo img {
-    height: 36px;
-    width: auto;
-    display: block;
+.navbar .nav-link-anchor.active,
+.navbar .nav-link-anchor:active,
+.navbar .nav-link-anchor.show {
+    color: var(--blue) !important;
 }

@@ -69,8 +69,8 @@ function NavbarComponent() {
                 <Navbar.Toggle id="menubtn" aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto gap-1 mt-3 mt-lg-0">
-                        <Nav.Link as={NavLink} to="/">Home</Nav.Link>
-                        <Nav.Link href="#contatti">Contatti</Nav.Link>
+                        {/* <Nav.Link as={NavLink} to="/">Home</Nav.Link> */}
+                        <Nav.Link href="#contatti" className="nav-link-anchor">Contatti</Nav.Link>
                         <Nav.Link as={NavLink} to="/login">Login</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
