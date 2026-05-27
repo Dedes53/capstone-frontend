@@ -8,6 +8,8 @@ body {
 
 :root {
   --sidebar-closed: 72px;
+  --blue: #147BFD;
+  --orange: #FF7900;
 }
 
 /* .app-content {
@@ -18,11 +20,11 @@ body {
 } */
 
 .app-content {
-  margin-left: 72px;
+  /* margin-left: 72px; */
   /* spazio sidebar chiusa */
-  width: calc(100% - 72px);
+  /* width: calc(100% - 72px); */
   /* riduce spazio reale */
-  min-height: calc(100vh - 70px);
+  /* min-height: calc(100vh - 70px); */
   box-sizing: border-box;
   padding: 16px;
 }
