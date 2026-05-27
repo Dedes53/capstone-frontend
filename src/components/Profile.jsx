@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/UseAuth.js";
-import SideBar from "./SideBar.jsx";
 import ProfileSkillSection from "./ProfileSkillSection.jsx";
-import '../assets/css/Profile.css';
 
 function Profile() {
     const { token } = useAuth();
@@ -56,27 +54,25 @@ function Profile() {
     if (error) return <p style={{ color: "crimson" }}>{error}</p>;
 
     return (
-        <section className="profile-section">
-            <SideBar />
-
-            <div>
-                <div>
-                    <h1>Profilo</h1>
-                    <img
-                        src={profile.avatarUrl}
-                        alt={`Avatar di ${profile.username}`}
-                        width={120}
-                        height={120}
-                        style={{ borderRadius: "50%", objectFit: "cover" }}
-                    />
-                    <p><strong>Username:</strong> {profile.username}</p>
-                    <p><strong>Nome:</strong> {profile.name}</p>
-                    <p><strong>Cognome:</strong> {profile.surname}</p>
-                    <p><strong>Email:</strong> {profile.email}</p>
-                </div>
-                <ProfileSkillSection skills={profile.skills} />
-            </div>
-        </section>
+        <>
+            <section>
+                <h1>Profilo</h1>
+                <img
+                    src={profile.avatarUrl}
+                    alt={`Avatar di ${profile.username}`}
+                    width={120}
+                    height={120}
+                    style={{ borderRadius: "50%", objectFit: "cover" }}
+                />
+                <p><strong>Username:</strong> {profile.username}</p>
+                <p><strong>Nome:</strong> {profile.name}</p>
+                <p><strong>Cognome:</strong> {profile.surname}</p>
+                <p><strong>Email:</strong> {profile.email}</p>
+            </section>
+            <section>
+                <ProfileSkillSection />
+            </section>
+        </>
     );
 }
 
