@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/UseAuth.js";
 import ProfileSkillSection from "./ProfileSkillSection.jsx";
-import SideBar from "./SideBar.jsx";
+
 
 function Profile() {
     const { token } = useAuth();
@@ -58,7 +58,6 @@ function Profile() {
     return (
         <>
             <div className="profile-section ">
-                <SideBar />
                 <div>
                     <section>
                         <h1>Profilo</h1>
