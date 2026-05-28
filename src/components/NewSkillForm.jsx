@@ -98,7 +98,7 @@ function NewSkillForm({
                         throw new Error(msg || "Errore creazione skill");
                     });
                 }
-                return null; // non facciamo parse JSON per evitare problemi
+                return null;
             })
             .then(() => {
                 setSuccess("Skill creata con successo!");
