@@ -1,0 +1,68 @@
+.home-padding {
+    padding: 0 10%;
+}
+
+.home-title {
+    margin-top: 10vh;
+    height: 80vh;
+}
+
+.home-title h2 {
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.home-title p {
+    font-size: 1.5rem;
+    color: #555;
+}
+
+.home-title img {
+    width: 100%;
+    max-width: 600px;
+    margin-top: 20px;
+}
+
+#how-it-works {
+    background-color: rgba(222, 222, 222, 0.503);
+    box-shadow: 0px 0px 13px 5px #b8b6b6d9;
+    padding-bottom: 10%;
+}
+
+#how-it-works h2 {
+    font-size: 2rem;
+    font-weight: bold;
+    padding: 10% 0;
+}
+
+.cards-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    gap: 2rem;
+}
+
+.home-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    border: 2px solid var(--orange);
+    padding: 1rem;
+}
+
+.card-icon {
+    font-size: 2rem;
+    color: #007BFF;
+}
+
+.home-card h4 {
+    font-weight: bold;
+}
+
+.home-card p {
+    margin: 0;
+    font-size: 1.2rem;
+    text-align: center;
+}

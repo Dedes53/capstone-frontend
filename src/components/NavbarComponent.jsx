@@ -14,8 +14,8 @@ function NavbarComponent() {
                     </div>
 
                     <Navbar.Brand as={NavLink} to="/">
-                        <span className="skill">Skill</span>
-                        <span className="swap">Swap</span>
+                        <span className="blue">Skill</span>
+                        <span className="orange">Swap</span>
                     </Navbar.Brand>
                 </div>
 

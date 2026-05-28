@@ -43,11 +43,11 @@
     font-weight: bold;
 }
 
-.skill {
+.blue {
     color: var(--blue);
 }
 
-.swap {
+.orange {
     color: var(--orange);
 }
 
