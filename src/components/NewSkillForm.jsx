@@ -8,6 +8,7 @@ const DEFAULT_CATEGORIES = [
     "SCUOLA",
     "CUCINA",
     "FAI_DA_TE",
+    "ALTRO"
 ];
 
 const CATEGORY_LABELS = {
@@ -17,6 +18,7 @@ const CATEGORY_LABELS = {
     SCUOLA: "Scuola",
     CUCINA: "Cucina",
     FAI_DA_TE: "Fai da te",
+    ALTRO: "Altro",
 };
 
 function NewSkillForm({
