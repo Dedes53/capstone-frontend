@@ -23,6 +23,8 @@ function NavbarComponent() {
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="ms-auto gap-1 mt-3 mt-lg-0">
                         {/* <Nav.Link as={NavLink} to="/">Home</Nav.Link> */}
+                        <Nav.Link href="#how-it-works" className="nav-link-anchor">Come funziona</Nav.Link>
+                        <Nav.Link href="#categories" className="nav-link-anchor">Categorie</Nav.Link>
                         <Nav.Link href="#contatti" className="nav-link-anchor">Contatti</Nav.Link>
                         <Nav.Link as={NavLink} to="/login">Login</Nav.Link>
                     </Nav>
