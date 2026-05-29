@@ -13,7 +13,7 @@ function NavbarComponent() {
                         <img src="/logo.png" alt="Logo" />
                     </div>
 
-                    <Navbar.Brand as={NavLink} to="/">
+                    <Navbar.Brand as={NavLink} to="/" className="site-title">
                         <span className="blue">Skill</span>
                         <span className="orange">Swap</span>
                     </Navbar.Brand>

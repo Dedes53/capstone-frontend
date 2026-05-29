@@ -13,6 +13,11 @@
     z-index: 30;
 }
 
+.site-title {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
 #menubtn {
     border: 1px solid white;
 }
