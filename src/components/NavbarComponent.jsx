@@ -26,10 +26,9 @@ function NavbarComponent() {
             }
         };
 
-        // Se non sei in home, prima vai in home poi scorri
+
         if (location.pathname !== "/") {
             navigate("/");
-            // aspetta che la home sia renderizzata
             setTimeout(goToAnchor, 100);
         } else {
             goToAnchor();
