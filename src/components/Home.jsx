@@ -88,7 +88,36 @@ function Home() {
             </div>
 
             <div id="contatti" className="home-padding ">
+                <h2 className="blue">CONTATTI</h2>
+                <Container className="mt-4">
+                    <Row className="g-4">
+                        <Col xs={4}>
+                            <div className="contact-card">
+                                <i className="bi bi-envelope-fill contact-icon"></i>
+                                <a className="contact-link" href="mailto:federico.lepore73@gmail.com"></a>
+                            </div>
+                        </Col>
 
+                        <Col xs={4}>
+                            <div className="contact-card">
+                                <i className="bi bi-telephone-fill contact-icon"></i>
+                                <a className="contact-link" href="tel:+393394665372"> </a>
+                            </div>
+                        </Col>
+
+                        <Col xs={4}>
+                            <div className="contact-card">
+                                <i className="bi bi-linkedin contact-icon"></i>
+                                <a
+                                    className="contact-link"
+                                    href="https://www.linkedin.com/in/federicolepore/"
+                                >
+                                </a>
+                            </div>
+                        </Col>
+                    </Row>
+                </Container>
+                <p className="mt-4">Sviluppato da <span className="fw-bold">Federico Lepore</span></p>
             </div>
         </>
     )
