@@ -1,16 +1,22 @@
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 
-/* RESET */
-body {
-  margin: 0;
-  font-family: 'Roboto', sans-serif;
-}
-
 :root {
   --sidebar-closed: 72px;
   --blue: #147BFD;
   --orange: #FF7900;
 }
+
+/* RESET */
+body {
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+  padding-top: 72px;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
 
 /* .app-content {
   margin-left: var(--sidebar-closed);
