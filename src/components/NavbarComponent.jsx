@@ -66,17 +66,17 @@ function NavbarComponent() {
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="ms-auto gap-1 mt-3 mt-lg-0">
                         <Nav.Link
-                            href="#how-it-works"
+                            href="#come-funziona"
                             className="nav-link-anchor"
-                            onClick={(e) => handleAnchorClick(e, "how-it-works")}
+                            onClick={(e) => handleAnchorClick(e, "come-funziona")}
                         >
                             Come funziona
                         </Nav.Link>
 
                         <Nav.Link
-                            href="#categories"
+                            href="#categorie"
                             className="nav-link-anchor"
-                            onClick={(e) => handleAnchorClick(e, "categories")}
+                            onClick={(e) => handleAnchorClick(e, "categorie")}
                         >
                             Categorie
                         </Nav.Link>
