@@ -8,6 +8,7 @@ import Profile from './components/Profile';
 import Register from './components/Register';
 import PrivateLayout from './components/PrivateLayout';
 import MatchComponent from './components/MatchComponent';
+import SearchComponent from './components/SearchComponent';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route path="/chat" element={<Chat />} /> */}
           <Route path="/profile" element={<Profile />} />
           <Route path="/match" element={<MatchComponent />} />
+          <Route path="/search" element={<SearchComponent />} />
         </Route>
       </Routes>
 
