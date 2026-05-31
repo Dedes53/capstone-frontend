@@ -32,7 +32,7 @@ function SideBar() {
                         </>
                     )}
                 </NavLink>
-                <NavLink to="/chat" className="nav-item">
+                <NavLink to="/match" className="nav-item">
                     {({ isActive }) => (
                         <>
                             <i className={`bi ${isActive ? "bi-people-fill" : "bi-people"}`}></i>

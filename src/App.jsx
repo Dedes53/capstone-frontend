@@ -7,6 +7,7 @@ import Login from './components/Login';
 import Profile from './components/Profile';
 import Register from './components/Register';
 import PrivateLayout from './components/PrivateLayout';
+import MatchComponent from './components/MatchComponent';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           {/* <Route path="/search" element={<Search />} />
           <Route path="/chat" element={<Chat />} /> */}
           <Route path="/profile" element={<Profile />} />
+          <Route path="/match" element={<MatchComponent />} />
         </Route>
       </Routes>
 
