@@ -1,0 +1,11 @@
+.private-main {
+    margin-left: var(--sidebar-w-mobile);
+    min-height: 100vh;
+    padding: 1rem;
+}
+
+@media (min-width: 992px) {
+    .private-main {
+        margin-left: var(--sidebar-w-desktop);
+    }
+}

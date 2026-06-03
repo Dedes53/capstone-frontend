@@ -1,7 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 
 :root {
-  --sidebar-closed: 72px;
   --blue: #147BFD;
   --orange: #FF7900;
 }
@@ -17,20 +16,7 @@ html {
   scroll-behavior: smooth;
 }
 
-
-/* .app-content {
-  margin-left: var(--sidebar-closed);
-  min-height: calc(100vh - 70px);
-  padding: 16px;
-  box-sizing: border-box;
-} */
-
 .app-content {
-  /* margin-left: 72px; */
-  /* spazio sidebar chiusa */
-  /* width: calc(100% - 72px); */
-  /* riduce spazio reale */
-  /* min-height: calc(100vh - 70px); */
   box-sizing: border-box;
   padding: 16px;
 }
