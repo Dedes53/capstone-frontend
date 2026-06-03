@@ -14,6 +14,10 @@ function Profile() {
     const [avatarError, setAvatarError] = useState("");
     const [avatarSuccess, setAvatarSuccess] = useState("");
 
+    const MAX_FILE_SIZE_MB = 2;
+    const MAX_FILE_SIZE_BYTES = MAX_FILE_SIZE_MB * 1024 * 1024;
+    const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/webp"];
+
     useEffect(() => {
         if (!token) navigate("/login");
     }, [token, navigate]);
@@ -52,13 +56,40 @@ function Profile() {
         };
     }, [token]);
 
+    // timeout
+    useEffect(() => {
+        if (!avatarSuccess && !avatarError) return;
+
+        const timer = setTimeout(() => {
+            setAvatarSuccess("");
+            setAvatarError("");
+        }, 3000);
+
+        return () => clearTimeout(timer);
+    }, [avatarSuccess, avatarError]);
+
     const handleAvatarChange = (e) => {
         const file = e.target.files?.[0];
         if (!file || !token) return;
 
-        setAvatarUploading(true);
         setAvatarError("");
         setAvatarSuccess("");
+
+        // Controllo tipo file
+        if (!ALLOWED_TYPES.includes(file.type)) {
+            setAvatarError("Formato non supportato. Usa JPG, PNG o WEBP.");
+            e.target.value = "";
+            return;
+        }
+
+        // Controllo dimensione
+        if (file.size > MAX_FILE_SIZE_BYTES) {
+            setAvatarError(`File troppo grande. Dimensione massima ${MAX_FILE_SIZE_MB}MB.`);
+            e.target.value = "";
+            return;
+        }
+
+        setAvatarUploading(true);
 
         const formData = new FormData();
         formData.append("avatar", file);
@@ -116,10 +147,13 @@ function Profile() {
                         <input
                             id="avatarInput"
                             type="file"
-                            accept="image/*"
+                            accept="image/jpeg,image/png,image/webp"
                             onChange={handleAvatarChange}
                             disabled={avatarUploading}
                         />
+                        <small style={{ display: "block", marginTop: "4px", color: "#666" }}>
+                            Formati: JPG, PNG, WEBP • Max: {MAX_FILE_SIZE_MB}MB
+                        </small>
                     </div>
 
                     {avatarUploading && <p>Caricamento avatar in corso...</p>}
