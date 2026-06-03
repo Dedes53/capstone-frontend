@@ -1,4 +1,4 @@
-// import "../assets/css/SkillCard.css";
+import "../assets/css/SkillCard.css";
 
 function SkillCard({
     id,
@@ -9,6 +9,21 @@ function SkillCard({
     onDelete,
     deleting = false,
 }) {
+    const normalizedType = String(type).toUpperCase();
+    const typeClass =
+        normalizedType === "OWNED"
+            ? "owned"
+            : normalizedType === "WANTED"
+                ? "wanted"
+                : "default";
+
+    const typeLabel =
+        normalizedType === "OWNED"
+            ? "Posseduta"
+            : normalizedType === "WANTED"
+                ? "Ricercata"
+                : normalizedType;
+
     const handleDelete = () => {
         if (!id || !onDelete) return;
         const ok = window.confirm(`Vuoi eliminare la skill "${title}"?`);
@@ -16,20 +31,33 @@ function SkillCard({
     };
 
     return (
-        <article className="skill-card">
+        <article className={`skill-card skill-card--${typeClass}`}>
             <header className="skill-card__header">
                 <h3 className="skill-card__title">{title}</h3>
-                <span className={`skill-card__badge skill-card__badge--${String(type).toLowerCase()}`}>
-                    {type}
+                <span className={`skill-card__badge skill-card__badge--${typeClass}`}>
+                    {typeLabel}
                 </span>
             </header>
 
             <p className="skill-card__description">{description}</p>
-            <p><strong>Categoria:</strong> {category}</p>
 
-            <button type="button" onClick={handleDelete} disabled={deleting}>
-                {deleting ? "Eliminazione..." : "Elimina"}
-            </button>
+            <div className="skill-card__meta">
+                <p className="skill-card__category">
+                    <strong>Categoria:</strong>
+                    <span>{category}</span>
+                </p>
+            </div>
+
+            <div className="skill-card__actions">
+                <button
+                    type="button"
+                    className="skill-card__delete-btn"
+                    onClick={handleDelete}
+                    disabled={deleting}
+                >
+                    {deleting ? "Eliminazione..." : "Elimina"}
+                </button>
+            </div>
         </article>
     );
 }

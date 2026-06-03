@@ -42,7 +42,7 @@ function NewSkillForm({
         title: "",
         description: "",
         category: "",
-        type: defaultType, // OWNED | WANTED
+        type: defaultType,
     });
 
     const [loading, setLoading] = useState(false);
