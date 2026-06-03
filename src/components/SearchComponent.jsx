@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
-import { Alert, Button, Col, Container, Form, Row, Spinner } from "react-bootstrap";
 import { useAuth } from "../context/UseAuth.jsx";
 import SearchCard from "./SearchCard";
+import "../assets/css/SearchComponent.css";
 
 const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:3001";
 const CATEGORIES = ["TECH", "CASA", "GIARDINAGGIO", "SCUOLA", "CUCINA", "FAI_DA_TE"];
@@ -103,7 +103,6 @@ function SearchComponent() {
                                 selectedCategories.includes(String(s.category).toUpperCase())
                             );
 
-
                     const uniqueOwnerIds = [...new Set(filteredByCategory.map((s) => s.userId).filter(Boolean))];
 
                     return Promise.all([
@@ -168,90 +167,93 @@ function SearchComponent() {
 
     if (!token) {
         return (
-            <Container className="py-4">
-                <Alert variant="warning" className="mb-0">
-                    Token mancante. Effettua il login.
-                </Alert>
-            </Container>
+            <section className="search-page">
+                <div className="search-shell">
+                    <div className="search-alert search-alert--warning">
+                        Token mancante. Effettua il login.
+                    </div>
+                </div>
+            </section>
         );
     }
 
     return (
-        <Container className="py-4">
-            <h2 className="mb-3">Ricerca Competenze</h2>
+        <section className="search-page">
+            <div className="search-shell">
+                <header className="search-header">
+                    <h2>Ricerca Competenze</h2>
+                    <p>Trova skill utili e scopri utenti compatibili con i tuoi interessi.</p>
+                </header>
 
-            <Form className="mb-4">
-                <Row className="g-3">
-                    <Col xs={12}>
-                        <Form.Control
-                            type="text"
-                            placeholder="Scrivi una competenza (opzionale)..."
-                            value={query}
-                            onChange={(e) => setQuery(e.target.value)}
-                        />
-                    </Col>
-                </Row>
+                <div className="search-form">
+                    <input
+                        className="search-input"
+                        type="text"
+                        placeholder="Scrivi una competenza (opzionale)..."
+                        value={query}
+                        onChange={(e) => setQuery(e.target.value)}
+                    />
 
-                <div className="mt-3 d-flex flex-wrap gap-2">
-                    {CATEGORIES.map((cat) => {
-                        const active = selectedCategories.includes(cat);
-                        return (
-                            <Button
-                                key={cat}
-                                type="button"
-                                size="sm"
-                                variant={active ? "dark" : "outline-dark"}
-                                onClick={() => toggleCategory(cat)}
-                            >
-                                {cat}
-                            </Button>
-                        );
-                    })}
+                    <div className="search-categories">
+                        {CATEGORIES.map((cat) => {
+                            const active = selectedCategories.includes(cat);
+                            return (
+                                <button
+                                    key={cat}
+                                    type="button"
+                                    className={`search-chip ${active ? "is-active" : ""}`}
+                                    onClick={() => toggleCategory(cat)}
+                                >
+                                    {cat}
+                                </button>
+                            );
+                        })}
+                    </div>
+
+                    <div className="search-actions">
+                        <button type="button" className="search-reset-btn" onClick={clearFilters}>
+                            Reset filtri
+                        </button>
+                    </div>
                 </div>
 
-                <div className="mt-3">
-                    <Button type="button" variant="outline-secondary" onClick={clearFilters}>
-                        Reset filtri
-                    </Button>
-                </div>
-            </Form>
+                {isIdle && (
+                    <div className="search-alert search-alert--neutral">
+                        Inserisci testo o seleziona categorie per avviare la ricerca automatica.
+                    </div>
+                )}
 
-            {isIdle && (
-                <Alert variant="light" className="border">
-                    Inserisci testo o seleziona categorie per avviare la ricerca automatica.
-                </Alert>
-            )}
+                {isLoading && (
+                    <div className="search-loading">
+                        <div className="search-spinner" aria-hidden="true"></div>
+                    </div>
+                )}
 
-            {isLoading && (
-                <div className="text-center py-4">
-                    <Spinner animation="border" />
-                </div>
-            )}
+                {!isLoading && error && <div className="search-alert search-alert--danger">{error}</div>}
 
-            {!isLoading && error && <Alert variant="danger">{error}</Alert>}
+                {!isLoading && !error && !isIdle && (
+                    <>
+                        <p className="search-results-count">
+                            Risultati trovati: <strong>{results.length}</strong>
+                        </p>
 
-            {!isLoading && !error && !isIdle && (
-                <>
-                    <p className="mb-3">
-                        Risultati trovati: <strong>{results.length}</strong>
-                    </p>
-
-                    {results.length === 0 ? (
-                        <Alert variant="info" className="mb-0">
-                            Nessuna skill trovata con i filtri selezionati.
-                        </Alert>
-                    ) : (
-                        <Row className="g-3">
-                            {results.map((skill) => (
-                                <Col xs={12} md={6} lg={4} key={skill.id}>
-                                    <SearchCard skill={skill} />
-                                </Col>
-                            ))}
-                        </Row>
-                    )}
-                </>
-            )}
-        </Container>
+                        {results.length === 0 ? (
+                            <div className="search-alert search-alert--info">
+                                Nessuna skill trovata con i filtri selezionati.
+                            </div>
+                        ) : (
+                            <div className="search-grid">
+                                {results.map((skill) => (
+                                    <article className="search-grid-item" key={skill.id}>
+                                        <SearchCard skill={skill} />
+                                    </article>
+                                ))}
+                            </div>
+                        )}
+                    </>
+                )}
+            </div>
+        </section>
     );
 }
 
