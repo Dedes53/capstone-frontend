@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import { Alert, Col, Container, Row, Spinner } from "react-bootstrap";
-import UserCard from "./UserCard";
 import { useAuth } from "../context/UseAuth.jsx";
+import UserCard from "./UserCard";
+import "../assets/css/MatchComponent.css";
 
 const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:3001";
 
 function MatchComponent() {
-    const [status, setStatus] = useState("loading"); // loading | success | error
+    const [status, setStatus] = useState("idle"); // idle | loading | success | error
     const [error, setError] = useState("");
     const [matches, setMatches] = useState([]);
 
@@ -34,6 +34,8 @@ function MatchComponent() {
 
     useEffect(() => {
         if (!token) return;
+
+        let cancelled = false;
 
         const headers = {
             "Content-Type": "application/json",
@@ -88,70 +90,96 @@ function MatchComponent() {
                 return Promise.all(cardsPromises);
             })
             .then((cards) => {
+                if (cancelled) return;
+
                 const onlyMatches = cards
                     .filter((c) => c.isReciprocalMatch)
-                    .sort((a, b) => (b.iCanHelp.length + b.canHelpMe.length) - (a.iCanHelp.length + a.canHelpMe.length));
+                    .sort(
+                        (a, b) =>
+                            b.iCanHelp.length +
+                            b.canHelpMe.length -
+                            (a.iCanHelp.length + a.canHelpMe.length)
+                    );
 
                 setMatches(onlyMatches);
+                setError("");
                 setStatus("success");
             })
             .catch((err) => {
+                if (cancelled) return;
                 setError(err.message || "Errore durante il caricamento dei match.");
                 setStatus("error");
             });
+
+        return () => {
+            cancelled = true;
+        };
     }, [token]);
 
     if (!token) {
         return (
-            <Container className="py-4">
-                <Alert variant="warning" className="mb-0">
-                    Token mancante. Effettua il login.
-                </Alert>
-            </Container>
+            <section className="match-page">
+                <div className="match-shell">
+                    <div className="match-alert match-alert--warning">
+                        Token mancante. Effettua il login.
+                    </div>
+                </div>
+            </section>
         );
     }
 
-    if (status === "loading") {
+    if (status === "idle") {
         return (
-            <Container className="py-5 text-center">
-                <Spinner animation="border" />
-                <p className="mt-3 mb-0">Cerco i match migliori per te...</p>
-            </Container>
+            <section className="match-page">
+                <div className="match-shell">
+                    <div className="match-loading">
+                        <div className="match-spinner" aria-hidden="true"></div>
+                        <p>Cerco i match migliori per te...</p>
+                    </div>
+                </div>
+            </section>
         );
     }
 
     if (status === "error") {
         return (
-            <Container className="py-4">
-                <Alert variant="danger">{error}</Alert>
-            </Container>
+            <section className="match-page">
+                <div className="match-shell">
+                    <div className="match-alert match-alert--danger">{error}</div>
+                </div>
+            </section>
         );
     }
 
     return (
-        <Container className="py-4">
-            <h2 className="mb-3">I tuoi Match</h2>
+        <section className="match-page">
+            <div className="match-shell">
+                <header className="match-header">
+                    <h2>I tuoi Match</h2>
+                    <p>Persone con cui puoi scambiare competenze in modo reciproco.</p>
+                </header>
 
-            {matches.length === 0 ? (
-                <Alert variant="info" className="mb-0">
-                    Nessun match reciproco trovato al momento.
-                </Alert>
-            ) : (
-                <Row className="g-4">
-                    {matches.map((m) => (
-                        <Col key={m.user.id} xs={12} md={6} xl={4}>
-                            <UserCard
-                                user={m.user}
-                                iCanHelp={m.iCanHelp}
-                                canHelpMe={m.canHelpMe}
-                                ownedSkills={m.ownedSkills}
-                                wantedSkills={m.wantedSkills}
-                            />
-                        </Col>
-                    ))}
-                </Row>
-            )}
-        </Container>
+                {matches.length === 0 ? (
+                    <div className="match-alert match-alert--info">
+                        Nessun match reciproco trovato al momento.
+                    </div>
+                ) : (
+                    <div className="match-grid">
+                        {matches.map((m) => (
+                            <article key={m.user.id} className="match-grid-item">
+                                <UserCard
+                                    user={m.user}
+                                    iCanHelp={m.iCanHelp}
+                                    canHelpMe={m.canHelpMe}
+                                    ownedSkills={m.ownedSkills}
+                                    wantedSkills={m.wantedSkills}
+                                />
+                            </article>
+                        ))}
+                    </div>
+                )}
+            </div>
+        </section>
     );
 }
 

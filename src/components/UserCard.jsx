@@ -1,75 +1,108 @@
-import { Badge, Button, Card } from "react-bootstrap";
+import { useState } from "react";
+import "../assets/css/UserCard.css";
 
-function UserCard({ user, iCanHelp, canHelpMe, ownedSkills, wantedSkills }) {
-    const fullName = `${user.name || ""} ${user.surname || ""}`.trim();
+function UserCard({ user, iCanHelp = [], canHelpMe = [], ownedSkills = [], wantedSkills = [] }) {
+    const [isOpen, setIsOpen] = useState(false);
+
+    const fullName = `${user?.name || ""} ${user?.surname || ""}`.trim();
+    const displayName = fullName || user?.username || "Utente";
+    const avatar = user?.avatarUrl || "https://placehold.co/64x64?text=U";
 
     return (
-        <Card className="h-100 shadow-sm">
-            <Card.Body className="d-flex flex-column">
-                <div className="d-flex align-items-center gap-3 mb-3">
-                    <img
-                        src={user.avatarUrl || "https://placehold.co/64x64?text=U"}
-                        alt={user.username}
-                        width={56}
-                        height={56}
-                        style={{ borderRadius: "50%", objectFit: "cover" }}
-                    />
-                    <div>
-                        <h5 className="mb-0">{fullName || user.username}</h5>
-                        <small className="text-muted">@{user.username}</small>
-                    </div>
+        <article className="user-card">
+            <header className="user-card__header">
+                <img
+                    src={avatar}
+                    alt={user?.username || "user"}
+                    width={60}
+                    height={60}
+                    className="user-card__avatar"
+                />
+
+                <div className="user-card__identity">
+                    <h3 className="user-card__name">{displayName}</h3>
+                    <p className="user-card__username">@{user?.username}</p>
                 </div>
+            </header>
 
-                <div className="mb-2">
-                    <small className="text-muted d-block mb-1">Tu puoi aiutarlo in:</small>
-                    {iCanHelp.map((c) => (
-                        <Badge bg="primary" className="me-1 mb-1" key={`help-${user.id}-${c}`}>
-                            {c}
-                        </Badge>
-                    ))}
+            <section className="user-card__block">
+                <p className="user-card__label user-card__label--blue">Tu puoi aiutarlo in:</p>
+                <div className="user-card__chips">
+                    {iCanHelp.length === 0 ? (
+                        <span className="user-card__empty">Nessuna categoria in comune</span>
+                    ) : (
+                        iCanHelp.map((c) => (
+                            <span className="chip chip--blue" key={`help-${user?.id}-${c}`}>
+                                {c}
+                            </span>
+                        ))
+                    )}
                 </div>
+            </section>
 
-                <div className="mb-3">
-                    <small className="text-muted d-block mb-1">Lui può aiutarti in:</small>
-                    {canHelpMe.map((c) => (
-                        <Badge bg="success" className="me-1 mb-1" key={`get-${user.id}-${c}`}>
-                            {c}
-                        </Badge>
-                    ))}
+            <section className="user-card__block">
+                <p className="user-card__label user-card__label--orange">Lui può aiutarti in:</p>
+                <div className="user-card__chips">
+                    {canHelpMe.length === 0 ? (
+                        <span className="user-card__empty">Nessuna categoria in comune</span>
+                    ) : (
+                        canHelpMe.map((c) => (
+                            <span className="chip chip--orange" key={`get-${user?.id}-${c}`}>
+                                {c}
+                            </span>
+                        ))
+                    )}
                 </div>
+            </section>
 
-                <details className="mb-3">
-                    <summary>Vedi skill</summary>
-                    <div className="mt-2">
-                        <small className="fw-bold d-block">Offre:</small>
-                        <ul className="mb-2">
-                            {ownedSkills.map((s) => (
-                                <li key={s.id}>
-                                    {s.title} ({s.category})
-                                </li>
-                            ))}
-                        </ul>
-
-                        <small className="fw-bold d-block">Cerca:</small>
-                        <ul className="mb-0">
-                            {wantedSkills.map((s) => (
-                                <li key={s.id}>
-                                    {s.title} ({s.category})
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                </details>
-
-                <Button
-                    className="mt-auto"
-                    variant="outline-dark"
-                    href={`mailto:${user.email}?subject=SkillSwap%20-%20Proposta%20di%20scambio`}
+            <div className="user-card__details">
+                <button
+                    type="button"
+                    className="user-card__details-toggle"
+                    onClick={() => setIsOpen((v) => !v)}
+                    aria-expanded={isOpen}
                 >
-                    Contatta via email
-                </Button>
-            </Card.Body>
-        </Card>
+                    {isOpen ? "Nascondi skill" : "Vedi skill"}
+                </button>
+
+                {isOpen && (
+                    <div className="user-card__details-content">
+                        <p className="details-title details-title--blue">Offre:</p>
+                        <ul>
+                            {ownedSkills.length === 0 ? (
+                                <li className="user-card__empty">Nessuna skill offerta</li>
+                            ) : (
+                                ownedSkills.map((s) => (
+                                    <li key={s.id}>
+                                        <span>{s.title}</span> <em>({s.category})</em>
+                                    </li>
+                                ))
+                            )}
+                        </ul>
+
+                        <p className="details-title details-title--orange">Cerca:</p>
+                        <ul>
+                            {wantedSkills.length === 0 ? (
+                                <li className="user-card__empty">Nessuna skill ricercata</li>
+                            ) : (
+                                wantedSkills.map((s) => (
+                                    <li key={s.id}>
+                                        <span>{s.title}</span> <em>({s.category})</em>
+                                    </li>
+                                ))
+                            )}
+                        </ul>
+                    </div>
+                )}
+            </div>
+
+            <a
+                className="user-card__contact-btn"
+                href={`mailto:${user?.email}?subject=SkillSwap%20-%20Proposta%20di%20scambio`}
+            >
+                Contatta via email
+            </a>
+        </article>
     );
 }
 

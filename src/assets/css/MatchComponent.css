@@ -1,0 +1,131 @@
+:root {
+    --blue: #147BFD;
+    --orange: #FF7900;
+    --black: #111111;
+    --white: #ffffff;
+    --muted: #6b7280;
+    --border: #e5e7eb;
+}
+
+.match-page {
+    width: 100%;
+}
+
+.match-shell {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1rem;
+}
+
+.match-header {
+    margin-bottom: 1rem;
+}
+
+.match-header h2 {
+    margin: 0;
+    color: var(--black);
+    font-size: 1.55rem;
+    line-height: 1.2;
+}
+
+.match-header p {
+    margin: 0.35rem 0 0;
+    color: var(--muted);
+    font-size: 0.95rem;
+}
+
+.match-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.9rem;
+    align-items: start;
+    /* FIX: evita stretch verticale delle card */
+}
+
+.match-grid-item {
+    min-width: 0;
+    align-self: start;
+    /* ulteriore sicurezza */
+}
+
+.match-alert {
+    border-radius: 10px;
+    padding: 0.8rem 0.9rem;
+    font-size: 0.94rem;
+    border: 1px solid transparent;
+}
+
+.match-alert--warning {
+    color: #92400e;
+    background: #fff7ed;
+    border-color: #fed7aa;
+}
+
+.match-alert--danger {
+    color: #b91c1c;
+    background: #fef2f2;
+    border-color: #fecaca;
+}
+
+.match-alert--info {
+    color: #1e3a8a;
+    background: #eff6ff;
+    border-color: #bfdbfe;
+}
+
+.match-loading {
+    min-height: 180px;
+    display: grid;
+    place-items: center;
+    gap: 0.7rem;
+    text-align: center;
+}
+
+.match-loading p {
+    margin: 0;
+    color: var(--muted);
+}
+
+.match-spinner {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 3px solid rgba(20, 123, 253, 0.2);
+    border-top-color: var(--blue);
+    animation: match-spin 0.9s linear infinite;
+}
+
+@keyframes match-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@media (min-width: 768px) {
+    .match-shell {
+        padding: 1.1rem;
+    }
+
+    .match-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1rem;
+        align-items: start;
+    }
+}
+
+@media (min-width: 1200px) {
+    .match-shell {
+        padding: 1.25rem;
+    }
+
+    .match-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 1.1rem;
+        align-items: start;
+    }
+
+    .match-header h2 {
+        font-size: 1.75rem;
+    }
+}
