@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import "../assets/css/Register.css";
 
 function Register() {
     const navigate = useNavigate();
@@ -59,11 +60,11 @@ function Register() {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-                username: form.username,
+                username: form.username.trim(),
                 password: form.password,
-                email: form.email,
-                name: form.name,
-                surname: form.surname,
+                email: form.email.trim(),
+                name: form.name.trim(),
+                surname: form.surname.trim(),
             }),
         })
             .then((res) => {
@@ -93,32 +94,113 @@ function Register() {
     };
 
     return (
-        <section>
-            <h1>Registrati</h1>
+        <main className="register-page">
+            <section className="register-card" aria-labelledby="register-title">
+                <div className="register-left">
+                    <h1 id="register-title">Registrati</h1>
+                    <p className="register-subtitle">
+                        Crea il tuo profilo SkillSwap e inizia a scambiare competenze.
+                    </p>
 
-            <form onSubmit={onSubmit}>
-                <input name="username" placeholder="Username" value={form.username} onChange={onChange} disabled={loading} />
-                <input name="name" placeholder="Nome" value={form.name} onChange={onChange} disabled={loading} />
-                <input name="surname" placeholder="Cognome" value={form.surname} onChange={onChange} disabled={loading} />
-                <input name="email" type="email" placeholder="Email" value={form.email} onChange={onChange} disabled={loading} />
-                <input name="password" type="password" placeholder="Password" value={form.password} onChange={onChange} disabled={loading} />
-                <input
-                    name="confirmPassword"
-                    type="password"
-                    placeholder="Conferma password"
-                    value={form.confirmPassword}
-                    onChange={onChange}
-                    disabled={loading}
-                />
+                    <p className="register-login-text">
+                        Hai già un account?{" "}
+                        <button
+                            type="button"
+                            className="register-login-link"
+                            onClick={() => navigate("/login")}
+                        >
+                            Accedi
+                        </button>
+                    </p>
+                </div>
 
-                <button type="submit" disabled={loading}>
-                    {loading ? "Registrazione..." : "Registrati"}
-                </button>
-            </form>
+                <form className="register-form" onSubmit={onSubmit}>
+                    <div className="register-grid">
+                        <div className="register-field">
+                            <label htmlFor="username">Username</label>
+                            <input
+                                id="username"
+                                name="username"
+                                placeholder="Username"
+                                value={form.username}
+                                onChange={onChange}
+                                disabled={loading}
+                            />
+                        </div>
 
-            {error && <p style={{ color: "crimson" }}>{error}</p>}
-            {success && <p style={{ color: "green" }}>{success}</p>}
-        </section>
+                        <div className="register-field">
+                            <label htmlFor="email">Email</label>
+                            <input
+                                id="email"
+                                name="email"
+                                type="email"
+                                placeholder="Email"
+                                value={form.email}
+                                onChange={onChange}
+                                disabled={loading}
+                            />
+                        </div>
+
+                        <div className="register-field">
+                            <label htmlFor="name">Nome</label>
+                            <input
+                                id="name"
+                                name="name"
+                                placeholder="Nome"
+                                value={form.name}
+                                onChange={onChange}
+                                disabled={loading}
+                            />
+                        </div>
+
+                        <div className="register-field">
+                            <label htmlFor="surname">Cognome</label>
+                            <input
+                                id="surname"
+                                name="surname"
+                                placeholder="Cognome"
+                                value={form.surname}
+                                onChange={onChange}
+                                disabled={loading}
+                            />
+                        </div>
+                    </div>
+
+                    <div className="register-field">
+                        <label htmlFor="password">Password</label>
+                        <input
+                            id="password"
+                            name="password"
+                            type="password"
+                            placeholder="Password"
+                            value={form.password}
+                            onChange={onChange}
+                            disabled={loading}
+                        />
+                    </div>
+
+                    <div className="register-field">
+                        <label htmlFor="confirmPassword">Conferma password</label>
+                        <input
+                            id="confirmPassword"
+                            name="confirmPassword"
+                            type="password"
+                            placeholder="Conferma password"
+                            value={form.confirmPassword}
+                            onChange={onChange}
+                            disabled={loading}
+                        />
+                    </div>
+
+                    {error && <p className="register-error">{error}</p>}
+                    {success && <p className="register-success">{success}</p>}
+
+                    <button className="register-submit" type="submit" disabled={loading}>
+                        {loading ? "Registrazione..." : "Registrati"}
+                    </button>
+                </form>
+            </section>
+        </main>
     );
 }
 
