@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Alert, Col, Container, Row, Spinner } from "react-bootstrap";
 import UserCard from "./UserCard";
+import { useAuth } from "../context/UseAuth.jsx";
 
 const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:3001";
 
@@ -9,7 +10,7 @@ function MatchComponent() {
     const [error, setError] = useState("");
     const [matches, setMatches] = useState([]);
 
-    const token = localStorage.getItem("token");
+    const { token } = useAuth();
 
     const fetchJson = (url, headers) => {
         return fetch(url, { headers }).then((res) => {

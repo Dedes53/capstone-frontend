@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Alert, Button, Col, Container, Form, Row, Spinner } from "react-bootstrap";
+import { useAuth } from "../context/UseAuth.jsx";
 import SearchCard from "./SearchCard";
 
 const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:3001";
@@ -12,7 +13,7 @@ function SearchComponent() {
     const [error, setError] = useState("");
     const [isLoading, setIsLoading] = useState(false);
 
-    const token = localStorage.getItem("token");
+    const { token } = useAuth();
 
     const headers = useMemo(
         () => ({
