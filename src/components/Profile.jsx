@@ -4,13 +4,15 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/UseAuth.js";
 import ProfileSkillSection from "./ProfileSkillSection.jsx";
 
-
 function Profile() {
     const { token } = useAuth();
     const navigate = useNavigate();
 
     const [profile, setProfile] = useState(null);
     const [error, setError] = useState("");
+    const [avatarUploading, setAvatarUploading] = useState(false);
+    const [avatarError, setAvatarError] = useState("");
+    const [avatarSuccess, setAvatarSuccess] = useState("");
 
     useEffect(() => {
         if (!token) navigate("/login");
@@ -50,35 +52,91 @@ function Profile() {
         };
     }, [token]);
 
+    const handleAvatarChange = (e) => {
+        const file = e.target.files?.[0];
+        if (!file || !token) return;
+
+        setAvatarUploading(true);
+        setAvatarError("");
+        setAvatarSuccess("");
+
+        const formData = new FormData();
+        formData.append("avatar", file);
+
+        fetch("http://localhost:3001/users/me/avatar", {
+            method: "PATCH",
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+            body: formData,
+        })
+            .then((res) => {
+                if (!res.ok) {
+                    return res.text().then((text) => {
+                        throw new Error(text || "Errore upload avatar");
+                    });
+                }
+                return res.json();
+            })
+            .then((updatedProfile) => {
+                setProfile(updatedProfile);
+                setAvatarSuccess("Avatar aggiornato con successo!");
+            })
+            .catch((err) => {
+                setAvatarError(err.message || "Errore durante il caricamento dell'avatar.");
+            })
+            .finally(() => {
+                setAvatarUploading(false);
+                e.target.value = "";
+            });
+    };
+
     const isLoading = !error && profile === null;
 
     if (isLoading) return <p>Caricamento profilo...</p>;
     if (error) return <p style={{ color: "crimson" }}>{error}</p>;
 
     return (
-        <>
-            <div className="profile-section ">
-                <div>
-                    <section>
-                        <h1>Profilo</h1>
-                        <img
-                            src={profile.avatarUrl}
-                            alt={`Avatar di ${profile.username}`}
-                            width={120}
-                            height={120}
-                            style={{ borderRadius: "50%", objectFit: "cover" }}
+        <div className="profile-section">
+            <div>
+                <section>
+                    <h1>Profilo</h1>
+
+                    <img
+                        src={profile.avatarUrl || "https://placehold.co/120x120?text=Avatar"}
+                        alt={`Avatar di ${profile.username}`}
+                        width={120}
+                        height={120}
+                        style={{ borderRadius: "50%", objectFit: "cover" }}
+                    />
+
+                    <div style={{ marginTop: "12px" }}>
+                        <label htmlFor="avatarInput"><strong>Cambia avatar:</strong></label>
+                        <br />
+                        <input
+                            id="avatarInput"
+                            type="file"
+                            accept="image/*"
+                            onChange={handleAvatarChange}
+                            disabled={avatarUploading}
                         />
-                        <p><strong>Username:</strong> {profile.username}</p>
-                        <p><strong>Nome:</strong> {profile.name}</p>
-                        <p><strong>Cognome:</strong> {profile.surname}</p>
-                        <p><strong>Email:</strong> {profile.email}</p>
-                    </section>
-                    <section>
-                        <ProfileSkillSection />
-                    </section>
-                </div>
+                    </div>
+
+                    {avatarUploading && <p>Caricamento avatar in corso...</p>}
+                    {avatarSuccess && <p style={{ color: "green" }}>{avatarSuccess}</p>}
+                    {avatarError && <p style={{ color: "crimson" }}>{avatarError}</p>}
+
+                    <p><strong>Username:</strong> {profile.username}</p>
+                    <p><strong>Nome:</strong> {profile.name}</p>
+                    <p><strong>Cognome:</strong> {profile.surname}</p>
+                    <p><strong>Email:</strong> {profile.email}</p>
+                </section>
+
+                <section>
+                    <ProfileSkillSection />
+                </section>
             </div>
-        </>
+        </div>
     );
 }
 
