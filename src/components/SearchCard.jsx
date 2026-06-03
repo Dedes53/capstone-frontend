@@ -1,12 +1,12 @@
-import { Badge, Card } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import "../assets/css/SearchCard.css";
 
 function SearchCard({ skill }) {
     const navigate = useNavigate();
 
-    const ownerUsername = skill.ownerUsername || "utente";
-    const ownerUserId = skill.userId || null;
-    const isMatch = Boolean(skill.isMatch);
+    const ownerUsername = skill?.ownerUsername || "utente";
+    const ownerUserId = skill?.userId || null;
+    const isMatch = Boolean(skill?.isMatch);
 
     const goToMatch = () => {
         if (!isMatch || !ownerUserId) return;
@@ -22,44 +22,44 @@ function SearchCard({ skill }) {
     };
 
     return (
-        <Card
-            className={`h-100 ${isMatch ? "border-success search-card-clickable" : ""}`}
+        <article
+            className={`search-card ${isMatch ? "search-card--match search-card--clickable" : "search-card--no-match"}`}
             onClick={goToMatch}
             role={isMatch && ownerUserId ? "button" : undefined}
             tabIndex={isMatch && ownerUserId ? 0 : -1}
             onKeyDown={handleKeyDown}
-            style={{ cursor: isMatch && ownerUserId ? "pointer" : "default" }}
             aria-disabled={!isMatch || !ownerUserId}
         >
-            <Card.Body>
-                <div className="d-flex justify-content-between align-items-start mb-2">
-                    <small className="fw-bold">@{ownerUsername}</small>
-                    <Badge bg={isMatch ? "success" : "secondary"}>
-                        {isMatch ? "MATCH" : "NO MATCH"}
-                    </Badge>
-                </div>
+            <div className="search-card__top">
+                <small className="search-card__owner">@{ownerUsername}</small>
 
-                <Card.Title className="mb-2">{skill.title}</Card.Title>
+                <span className={`search-card__status ${isMatch ? "is-match" : "is-no-match"}`}>
+                    {isMatch ? "MATCH" : "NO MATCH"}
+                </span>
+            </div>
 
-                <div className="mb-2">
-                    <Badge bg="dark">{skill.category}</Badge>
-                </div>
+            <h3 className="search-card__title">{skill?.title || "Senza titolo"}</h3>
 
-                <Card.Text className="mb-0">{skill.description}</Card.Text>
+            <div className="search-card__category-wrap">
+                <span className="search-card__category">{skill?.category || "-"}</span>
+            </div>
 
-                {isMatch && ownerUserId && (
-                    <small className="text-success d-block mt-2">
-                        Clicca per vedere il match nel dettaglio
-                    </small>
-                )}
+            <p className="search-card__description">
+                {skill?.description || "Nessuna descrizione"}
+            </p>
 
-                {isMatch && !ownerUserId && (
-                    <small className="text-warning d-block mt-2">
-                        Match trovato, ma manca userId nei dati.
-                    </small>
-                )}
-            </Card.Body>
-        </Card>
+            {isMatch && ownerUserId && (
+                <small className="search-card__hint search-card__hint--ok">
+                    Clicca per vedere il match nel dettaglio
+                </small>
+            )}
+
+            {isMatch && !ownerUserId && (
+                <small className="search-card__hint search-card__hint--warn">
+                    Match trovato, ma manca userId nei dati.
+                </small>
+            )}
+        </article>
     );
 }
 
