@@ -4,21 +4,32 @@ import { useNavigate } from "react-router-dom";
 function SearchCard({ skill }) {
     const navigate = useNavigate();
 
-    const isMatch = !!skill.isMatch;
     const ownerUsername = skill.ownerUsername || "utente";
-    const ownerUserId = skill.ownerUserId;
+    const ownerUserId = skill.userId || null;
+    const isMatch = Boolean(skill.isMatch);
 
-    const handleClick = () => {
-        if (isMatch && ownerUserId) {
-            navigate(`/match?userId=${ownerUserId}`);
+    const goToMatch = () => {
+        if (!isMatch || !ownerUserId) return;
+        navigate(`/match?userId=${ownerUserId}`);
+    };
+
+    const handleKeyDown = (e) => {
+        if (!isMatch || !ownerUserId) return;
+        if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            goToMatch();
         }
     };
 
     return (
         <Card
-            className={`h-100 ${isMatch ? "border-success" : ""}`}
-            onClick={handleClick}
-            style={{ cursor: isMatch ? "pointer" : "default" }}
+            className={`h-100 ${isMatch ? "border-success search-card-clickable" : ""}`}
+            onClick={goToMatch}
+            role={isMatch && ownerUserId ? "button" : undefined}
+            tabIndex={isMatch && ownerUserId ? 0 : -1}
+            onKeyDown={handleKeyDown}
+            style={{ cursor: isMatch && ownerUserId ? "pointer" : "default" }}
+            aria-disabled={!isMatch || !ownerUserId}
         >
             <Card.Body>
                 <div className="d-flex justify-content-between align-items-start mb-2">
@@ -36,9 +47,15 @@ function SearchCard({ skill }) {
 
                 <Card.Text className="mb-0">{skill.description}</Card.Text>
 
-                {isMatch && (
+                {isMatch && ownerUserId && (
                     <small className="text-success d-block mt-2">
                         Clicca per vedere il match nel dettaglio
+                    </small>
+                )}
+
+                {isMatch && !ownerUserId && (
+                    <small className="text-warning d-block mt-2">
+                        Match trovato, ma manca userId nei dati.
                     </small>
                 )}
             </Card.Body>
