@@ -1,5 +1,5 @@
 import { Navigate, Outlet } from "react-router-dom";
-import { useAuth } from "../context/UseAuth.js";
+import { useAuth } from "../context/UseAuth.jsx";
 import SideBar from "./SideBar";
 
 function PrivateLayout() {

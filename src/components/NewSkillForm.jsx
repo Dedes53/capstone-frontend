@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { useAuth } from "../context/UseAuth.js";
+import { useAuth } from "../context/UseAuth.jsx";
 
 const DEFAULT_CATEGORIES = [
     "TECH",

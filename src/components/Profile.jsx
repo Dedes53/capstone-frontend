@@ -1,7 +1,7 @@
 import "../assets/css/Profile.css";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../context/UseAuth.js";
+import { useAuth } from "../context/UseAuth.jsx";
 import ProfileSkillSection from "./ProfileSkillSection.jsx";
 
 function Profile() {

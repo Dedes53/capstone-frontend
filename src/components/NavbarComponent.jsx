@@ -4,7 +4,7 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { NavLink, useLocation } from "react-router-dom";
-import { useAuth } from "../context/UseAuth.js";
+import { useAuth } from "../context/UseAuth.jsx";
 
 function NavbarComponent() {
     const [expanded, setExpanded] = useState(false);

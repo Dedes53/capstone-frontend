@@ -1,5 +1,5 @@
 import { useEffect, useCallback, useState } from "react";
-import { useAuth } from "../context/UseAuth.js";
+import { useAuth } from "../context/UseAuth.jsx";
 import SkillCard from "./SkillCard.jsx";
 import NewSkillForm from "./NewSkillForm.jsx";
 
