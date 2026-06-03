@@ -3,37 +3,25 @@ import { useState } from "react";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
+import { useAuth } from "../context/UseAuth.js";
 
 function NavbarComponent() {
     const [expanded, setExpanded] = useState(false);
     const location = useLocation();
-    const navigate = useNavigate();
+    const { token } = useAuth();
+
+    const isLoggedIn = Boolean(token);
+    const isHomePage = location.pathname === "/";
 
     const closeMenuMobileOnly = () => {
-        if (window.innerWidth < 992) {
-            setExpanded(false);
-        }
+        if (window.innerWidth < 992) setExpanded(false);
     };
 
     const handleAnchorClick = (e, targetId) => {
         e.preventDefault();
-
-        const goToAnchor = () => {
-            const el = document.getElementById(targetId);
-            if (el) {
-                el.scrollIntoView({ behavior: "smooth", block: "start" });
-            }
-        };
-
-
-        if (location.pathname !== "/") {
-            navigate("/");
-            setTimeout(goToAnchor, 100);
-        } else {
-            goToAnchor();
-        }
-
+        const el = document.getElementById(targetId);
+        if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
         closeMenuMobileOnly();
     };
 
@@ -65,32 +53,42 @@ function NavbarComponent() {
                 <Navbar.Toggle id="menubtn" aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="ms-auto gap-1 mt-3 mt-lg-0">
-                        <Nav.Link
-                            href="#come-funziona"
-                            className="nav-link-anchor"
-                            onClick={(e) => handleAnchorClick(e, "come-funziona")}
-                        >
-                            Come funziona
-                        </Nav.Link>
+                        {isHomePage ? (
+                            <>
+                                <Nav.Link
+                                    href="#come-funziona"
+                                    className="nav-link-anchor"
+                                    onClick={(e) => handleAnchorClick(e, "come-funziona")}
+                                >
+                                    Come funziona
+                                </Nav.Link>
+                                <Nav.Link
+                                    href="#categorie"
+                                    className="nav-link-anchor"
+                                    onClick={(e) => handleAnchorClick(e, "categorie")}
+                                >
+                                    Categorie
+                                </Nav.Link>
+                                <Nav.Link
+                                    href="#contatti"
+                                    className="nav-link-anchor"
+                                    onClick={(e) => handleAnchorClick(e, "contatti")}
+                                >
+                                    Contatti
+                                </Nav.Link>
+                            </>
+                        ) : (
+                            <Nav.Link as={NavLink} to="/" onClick={closeMenuMobileOnly}>
+                                Home
+                            </Nav.Link>
+                        )}
 
                         <Nav.Link
-                            href="#categorie"
-                            className="nav-link-anchor"
-                            onClick={(e) => handleAnchorClick(e, "categorie")}
+                            as={NavLink}
+                            to={isLoggedIn ? "/profile" : "/login"}
+                            onClick={closeMenuMobileOnly}
                         >
-                            Categorie
-                        </Nav.Link>
-
-                        <Nav.Link
-                            href="#contatti"
-                            className="nav-link-anchor"
-                            onClick={(e) => handleAnchorClick(e, "contatti")}
-                        >
-                            Contatti
-                        </Nav.Link>
-
-                        <Nav.Link as={NavLink} to="/login" onClick={closeMenuMobileOnly}>
-                            Login
+                            {isLoggedIn ? "Profilo" : "Login"}
                         </Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
