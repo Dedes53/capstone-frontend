@@ -1,4 +1,56 @@
 .profile-section {
     display: flex;
+}
 
+.profile-avatar {
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.profile-error {
+    color: crimson;
+}
+
+.avatar-upload-wrapper {
+    margin-top: 12px;
+}
+
+.avatar-input-hidden {
+    display: none;
+}
+
+.avatar-upload-btn {
+    display: inline-block;
+    margin-top: 8px;
+    padding: 8px 14px;
+    border: 1px solid #333;
+    border-radius: 8px;
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.2s ease;
+}
+
+.avatar-upload-btn:hover {
+    background: #111;
+    color: #fff;
+}
+
+.avatar-upload-btn.disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.avatar-upload-hint {
+    display: block;
+    margin-top: 6px;
+    color: #666;
+}
+
+.avatar-success {
+    color: green;
+}
+
+.avatar-error {
+    color: crimson;
 }

@@ -56,7 +56,6 @@ function Profile() {
         };
     }, [token]);
 
-    // timeout
     useEffect(() => {
         if (!avatarSuccess && !avatarError) return;
 
@@ -75,14 +74,12 @@ function Profile() {
         setAvatarError("");
         setAvatarSuccess("");
 
-        // Controllo tipo file
         if (!ALLOWED_TYPES.includes(file.type)) {
             setAvatarError("Formato non supportato. Usa JPG, PNG o WEBP.");
             e.target.value = "";
             return;
         }
 
-        // Controllo dimensione
         if (file.size > MAX_FILE_SIZE_BYTES) {
             setAvatarError(`File troppo grande. Dimensione massima ${MAX_FILE_SIZE_MB}MB.`);
             e.target.value = "";
@@ -125,7 +122,7 @@ function Profile() {
     const isLoading = !error && profile === null;
 
     if (isLoading) return <p>Caricamento profilo...</p>;
-    if (error) return <p style={{ color: "crimson" }}>{error}</p>;
+    if (error) return <p className="profile-error">{error}</p>;
 
     return (
         <div className="profile-section">
@@ -138,27 +135,37 @@ function Profile() {
                         alt={`Avatar di ${profile.username}`}
                         width={120}
                         height={120}
-                        style={{ borderRadius: "50%", objectFit: "cover" }}
+                        className="profile-avatar"
                     />
 
-                    <div style={{ marginTop: "12px" }}>
-                        <label htmlFor="avatarInput"><strong>Cambia avatar:</strong></label>
+                    <div className="avatar-upload-wrapper">
+                        <strong>Cambia avatar:</strong>
                         <br />
+
                         <input
                             id="avatarInput"
                             type="file"
                             accept="image/jpeg,image/png,image/webp"
                             onChange={handleAvatarChange}
                             disabled={avatarUploading}
+                            className="avatar-input-hidden"
                         />
-                        <small style={{ display: "block", marginTop: "4px", color: "#666" }}>
+
+                        <label
+                            htmlFor="avatarInput"
+                            className={`avatar-upload-btn ${avatarUploading ? "disabled" : ""}`}
+                        >
+                            {avatarUploading ? "Caricamento..." : "Modifica"}
+                        </label>
+
+                        <small className="avatar-upload-hint">
                             Formati: JPG, PNG, WEBP • Max: {MAX_FILE_SIZE_MB}MB
                         </small>
                     </div>
 
                     {avatarUploading && <p>Caricamento avatar in corso...</p>}
-                    {avatarSuccess && <p style={{ color: "green" }}>{avatarSuccess}</p>}
-                    {avatarError && <p style={{ color: "crimson" }}>{avatarError}</p>}
+                    {avatarSuccess && <p className="avatar-success">{avatarSuccess}</p>}
+                    {avatarError && <p className="avatar-error">{avatarError}</p>}
 
                     <p><strong>Username:</strong> {profile.username}</p>
                     <p><strong>Nome:</strong> {profile.name}</p>
