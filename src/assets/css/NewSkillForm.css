@@ -1,0 +1,180 @@
+.new-skill-form {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1rem;
+    display: grid;
+    gap: 0.95rem;
+}
+
+.new-skill-title {
+    margin: 0;
+    color: var(--black);
+    font-size: 1.15rem;
+}
+
+.new-skill-fields {
+    display: grid;
+    gap: 0.8rem;
+}
+
+.new-skill-field {
+    display: grid;
+    gap: 0.35rem;
+}
+
+.new-skill-field label {
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: var(--black);
+}
+
+.new-skill-field input,
+.new-skill-field textarea,
+.new-skill-field select {
+    width: 100%;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 0.68rem 0.78rem;
+    font-size: 0.95rem;
+    color: var(--black);
+    background: var(--white);
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.new-skill-field textarea {
+    resize: vertical;
+    min-height: 96px;
+}
+
+.new-skill-field input:focus,
+.new-skill-field textarea:focus,
+.new-skill-field select:focus {
+    border-color: var(--blue);
+    box-shadow: 0 0 0 3px rgba(20, 123, 253, 0.12);
+}
+
+/* Tipo skill */
+.new-skill-type-fieldset {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 0.7rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+}
+
+.new-skill-type-fieldset legend {
+    color: var(--muted);
+    font-size: 0.85rem;
+    padding: 0 0.25rem;
+}
+
+.skill-type-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 0.35rem 0.7rem;
+    font-size: 0.9rem;
+    color: var(--black);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background: #fafafa;
+}
+
+.skill-type-chip input {
+    accent-color: var(--blue);
+}
+
+.skill-type-chip.active-owned {
+    border-color: rgba(20, 123, 253, 0.35);
+    background: rgba(20, 123, 253, 0.08);
+    color: var(--blue);
+    font-weight: 600;
+}
+
+.skill-type-chip.active-wanted {
+    border-color: rgba(255, 121, 0, 0.4);
+    background: rgba(255, 121, 0, 0.1);
+    color: var(--orange);
+    font-weight: 600;
+}
+
+/* Messaggi */
+.new-skill-error {
+    margin: 0;
+    color: #dc2626;
+    font-weight: 600;
+    font-size: 0.92rem;
+}
+
+.new-skill-success {
+    margin: 0;
+    color: #0f9d58;
+    font-weight: 600;
+    font-size: 0.92rem;
+}
+
+/* Azioni */
+.new-skill-actions {
+    display: flex;
+    gap: 0.55rem;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+}
+
+.btn-primary,
+.btn-secondary {
+    border-radius: 9px;
+    padding: 0.58rem 0.9rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: all 0.2s ease;
+}
+
+.btn-primary {
+    background: var(--blue);
+    color: var(--white);
+    border-color: var(--blue);
+}
+
+.btn-primary:hover {
+    filter: brightness(0.95);
+}
+
+.btn-secondary {
+    background: var(--white);
+    color: var(--black);
+    border-color: var(--border);
+}
+
+.btn-secondary:hover {
+    border-color: var(--blue);
+    color: var(--blue);
+}
+
+.btn-primary:disabled,
+.btn-secondary:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Desktop */
+@media (min-width: 992px) {
+    .new-skill-form {
+        padding: 1.1rem;
+    }
+
+    .new-skill-title {
+        font-size: 1.22rem;
+    }
+
+    .new-skill-fields {
+        gap: 0.9rem;
+    }
+}

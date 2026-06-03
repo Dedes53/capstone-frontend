@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import { useAuth } from "../context/UseAuth.jsx";
+import "../assets/css/NewSkillForm.css";
 
 const DEFAULT_CATEGORIES = [
     "TECH",
@@ -117,75 +118,101 @@ function NewSkillForm({
     };
 
     return (
-        <form onSubmit={onSubmit}>
-            <h3>Salva Nuova Skill</h3>
+        <form className="new-skill-form" onSubmit={onSubmit}>
+            <h3 className="new-skill-title">Salva Nuova Skill</h3>
 
-            <input
-                name="title"
-                placeholder="Titolo"
-                value={form.title}
-                onChange={onChange}
-                disabled={loading}
-            />
-
-            <textarea
-                name="description"
-                placeholder="Descrizione"
-                value={form.description}
-                onChange={onChange}
-                disabled={loading}
-            />
-
-            <select
-                name="category"
-                value={form.category}
-                onChange={onChange}
-                disabled={loading}
-            >
-                <option value="" disabled>
-                    Seleziona categoria
-                </option>
-                {safeCategories.map((c) => (
-                    <option key={c} value={c}>
-                        {CATEGORY_LABELS[c] || c}
-                    </option>
-                ))}
-            </select>
-
-            <div>
-                <label>
+            <div className="new-skill-fields">
+                <div className="new-skill-field">
+                    <label htmlFor="skill-title">Titolo</label>
                     <input
-                        type="radio"
-                        name="type"
-                        value="OWNED"
-                        checked={form.type === "OWNED"}
+                        id="skill-title"
+                        name="title"
+                        placeholder="Es. Riparazione PC"
+                        value={form.title}
                         onChange={onChange}
                         disabled={loading}
                     />
-                    Possedute
-                </label>
+                </div>
 
-                <label style={{ marginLeft: "1rem" }}>
-                    <input
-                        type="radio"
-                        name="type"
-                        value="WANTED"
-                        checked={form.type === "WANTED"}
+                <div className="new-skill-field">
+                    <label htmlFor="skill-description">Descrizione</label>
+                    <textarea
+                        id="skill-description"
+                        name="description"
+                        placeholder="Descrivi in breve la skill..."
+                        value={form.description}
                         onChange={onChange}
                         disabled={loading}
+                        rows={4}
                     />
-                    Ricercate
-                </label>
+                </div>
+
+                <div className="new-skill-field">
+                    <label htmlFor="skill-category">Categoria</label>
+                    <select
+                        id="skill-category"
+                        name="category"
+                        value={form.category}
+                        onChange={onChange}
+                        disabled={loading}
+                    >
+                        <option value="" disabled>
+                            Seleziona categoria
+                        </option>
+                        {safeCategories.map((c) => (
+                            <option key={c} value={c}>
+                                {CATEGORY_LABELS[c] || c}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+
+                <fieldset className="new-skill-type-fieldset">
+                    <legend>Tipo skill</legend>
+
+                    <label className={`skill-type-chip ${form.type === "OWNED" ? "active-owned" : ""}`}>
+                        <input
+                            type="radio"
+                            name="type"
+                            value="OWNED"
+                            checked={form.type === "OWNED"}
+                            onChange={onChange}
+                            disabled={loading}
+                        />
+                        Possedute
+                    </label>
+
+                    <label className={`skill-type-chip ${form.type === "WANTED" ? "active-wanted" : ""}`}>
+                        <input
+                            type="radio"
+                            name="type"
+                            value="WANTED"
+                            checked={form.type === "WANTED"}
+                            onChange={onChange}
+                            disabled={loading}
+                        />
+                        Ricercate
+                    </label>
+                </fieldset>
             </div>
 
-            {error && <p style={{ color: "crimson" }}>{error}</p>}
-            {success && <p style={{ color: "green" }}>{success}</p>}
+            {error && <p className="new-skill-error">{error}</p>}
+            {success && <p className="new-skill-success">{success}</p>}
 
-            <div style={{ display: "flex", gap: "0.5rem" }}>
-                <button type="button" onClick={onReset} disabled={loading}>
+            <div className="new-skill-actions">
+                <button
+                    className="btn-secondary"
+                    type="button"
+                    onClick={onReset}
+                    disabled={loading}
+                >
                     Svuota
                 </button>
-                <button type="submit" disabled={loading}>
+                <button
+                    className="btn-primary"
+                    type="submit"
+                    disabled={loading}
+                >
                     {loading ? "Salvataggio..." : "Salva skill"}
                 </button>
             </div>
