@@ -3,6 +3,11 @@
 :root {
   --blue: #147BFD;
   --orange: #FF7900;
+  --black: #111111;
+  --white: #ffffff;
+  --muted: #6b7280;
+  --border: #e5e7eb;
+  --bg-soft: #f8fafc;
 }
 
 /* RESET */

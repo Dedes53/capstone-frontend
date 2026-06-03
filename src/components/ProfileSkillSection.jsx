@@ -2,6 +2,7 @@ import { useEffect, useCallback, useState } from "react";
 import { useAuth } from "../context/UseAuth.jsx";
 import SkillCard from "./SkillCard.jsx";
 import NewSkillForm from "./NewSkillForm.jsx";
+import "../assets/css/ProfileSkillSection.css";
 
 function ProfileSkillSection() {
     const { token } = useAuth();
@@ -71,65 +72,86 @@ function ProfileSkillSection() {
     };
 
     return (
-        <section>
-            <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
-                <h2 style={{ margin: 0 }}>Le tue skill</h2>
+        <section className="profile-skill-section">
+            <div className="skill-header-row">
+                <h2 className="skill-main-title">Le tue skill</h2>
 
                 <button
                     type="button"
                     onClick={() => setShowForm((v) => !v)}
                     aria-label={showForm ? "Chiudi form nuova skill" : "Apri form nuova skill"}
                     title={showForm ? "Chiudi" : "Aggiungi nuova"}
-                    className="btn btn-outline-primary rounded-circle d-flex align-items-center justify-content-center"
-                    style={{ width: "38px", height: "38px", padding: 0 }}
+                    className="skill-toggle-btn"
                 >
                     <i className={`bi ${showForm ? "bi-x-lg" : "bi-plus-lg"}`}></i>
                 </button>
             </div>
 
             {showForm && (
-                <NewSkillForm
-                    onCreated={() => {
-                        fetchSkills();
-                        setShowForm(false);
-                    }}
-                    onClose={() => setShowForm(false)}
-                />
+                <div className="new-skill-form-wrap">
+                    <NewSkillForm
+                        onCreated={() => {
+                            fetchSkills();
+                            setShowForm(false);
+                        }}
+                        onClose={() => setShowForm(false)}
+                    />
+                </div>
             )}
 
-            {error && <p style={{ color: "crimson" }}>{error}</p>}
+            {error && <p className="skill-error">{error}</p>}
 
-            <h2>Possedute</h2>
-            {owned.length === 0
-                ? <p>Non ci sono skill possedute</p>
-                : owned.map((s) => (
-                    <SkillCard
-                        key={s.id}
-                        id={s.id}
-                        title={s.title}
-                        description={s.description}
-                        category={s.category}
-                        type={s.type}
-                        onDelete={handleDeleteSkill}
-                        deleting={deletingId === s.id}
-                    />
-                ))}
+            <div className="skills-grid">
+                <div className="skill-column skill-column-owned">
+                    <div className="skill-column-head">
+                        <h3>Possedute</h3>
+                    </div>
 
-            <h2>Ricercate</h2>
-            {wanted.length === 0
-                ? <p>Non ci sono skill ricercate</p>
-                : wanted.map((s) => (
-                    <SkillCard
-                        key={s.id}
-                        id={s.id}
-                        title={s.title}
-                        description={s.description}
-                        category={s.category}
-                        type={s.type}
-                        onDelete={handleDeleteSkill}
-                        deleting={deletingId === s.id}
-                    />
-                ))}
+                    <div className="skill-list">
+                        {owned.length === 0 ? (
+                            <p className="skill-empty">Non ci sono skill possedute</p>
+                        ) : (
+                            owned.map((s) => (
+                                <SkillCard
+                                    key={s.id}
+                                    id={s.id}
+                                    title={s.title}
+                                    description={s.description}
+                                    category={s.category}
+                                    type={s.type}
+                                    onDelete={handleDeleteSkill}
+                                    deleting={deletingId === s.id}
+                                />
+                            ))
+                        )}
+                    </div>
+                </div>
+
+                <div className="skill-column skill-column-wanted">
+                    <div className="skill-column-head">
+                        <h3>Ricercate</h3>
+                    </div>
+
+                    <div className="skill-list">
+                        {wanted.length === 0 ? (
+                            <p className="skill-empty">Non ci sono skill ricercate</p>
+                        ) : (
+                            wanted.map((s) => (
+                                <SkillCard
+                                    key={s.id}
+                                    id={s.id}
+                                    title={s.title}
+                                    description={s.description}
+                                    category={s.category}
+                                    type={s.type}
+                                    onDelete={handleDeleteSkill}
+                                    deleting={deletingId === s.id}
+                                />
+                            ))
+                        )}
+                    </div>
+                </div>
+            </div>
         </section>
     );
 }
