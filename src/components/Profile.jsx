@@ -130,47 +130,55 @@ function Profile() {
                 <section>
                     <h1>Profilo</h1>
 
-                    <img
-                        src={profile.avatarUrl || "https://placehold.co/120x120?text=Avatar"}
-                        alt={`Avatar di ${profile.username}`}
-                        width={120}
-                        height={120}
-                        className="profile-avatar"
-                    />
+                    <div className="profile-top-grid">
+                        <div className="profile-left">
+                            <img
+                                src={profile.avatarUrl || "https://placehold.co/120x120?text=Avatar"}
+                                alt={`Avatar di ${profile.username}`}
+                                width={160}
+                                height={160}
+                                className="profile-avatar"
+                            />
 
-                    <div className="avatar-upload-wrapper">
-                        <strong>Cambia avatar:</strong>
-                        <br />
+                            <div className="avatar-upload-wrapper">
+                                <strong>Cambia avatar:</strong>
+                                <br />
 
-                        <input
-                            id="avatarInput"
-                            type="file"
-                            accept="image/jpeg,image/png,image/webp"
-                            onChange={handleAvatarChange}
-                            disabled={avatarUploading}
-                            className="avatar-input-hidden"
-                        />
+                                <input
+                                    id="avatarInput"
+                                    type="file"
+                                    accept="image/jpeg,image/png,image/webp"
+                                    onChange={handleAvatarChange}
+                                    disabled={avatarUploading}
+                                    className="avatar-input-hidden"
+                                />
 
-                        <label
-                            htmlFor="avatarInput"
-                            className={`avatar-upload-btn ${avatarUploading ? "disabled" : ""}`}
-                        >
-                            {avatarUploading ? "Caricamento..." : "Modifica"}
-                        </label>
+                                <div className="avatar-upload-row">
+                                    <label
+                                        htmlFor="avatarInput"
+                                        className={`avatar-upload-btn ${avatarUploading ? "disabled" : ""}`}
+                                    >
+                                        {avatarUploading ? "Caricamento..." : "Modifica"}
+                                    </label>
 
-                        <small className="avatar-upload-hint">
-                            Formati: JPG, PNG, WEBP • Max: {MAX_FILE_SIZE_MB}MB
-                        </small>
+                                    <small className="avatar-upload-hint">
+                                        Formati: JPG, PNG, WEBP • Max: {MAX_FILE_SIZE_MB}MB
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="profile-right">
+                            <p><strong>Username:</strong> <span>{profile.username}</span></p>
+                            <p><strong>Nome:</strong> <span>{profile.name}</span></p>
+                            <p><strong>Cognome:</strong> <span>{profile.surname}</span></p>
+                            <p><strong>Email:</strong> <span>{profile.email}</span></p>
+                        </div>
                     </div>
 
                     {avatarUploading && <p>Caricamento avatar in corso...</p>}
                     {avatarSuccess && <p className="avatar-success">{avatarSuccess}</p>}
                     {avatarError && <p className="avatar-error">{avatarError}</p>}
-
-                    <p><strong>Username:</strong> {profile.username}</p>
-                    <p><strong>Nome:</strong> {profile.name}</p>
-                    <p><strong>Cognome:</strong> {profile.surname}</p>
-                    <p><strong>Email:</strong> {profile.email}</p>
                 </section>
 
                 <section>
