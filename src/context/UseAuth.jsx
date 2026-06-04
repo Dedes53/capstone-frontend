@@ -8,12 +8,14 @@ export function AuthProvider({ children }) {
 
     const initialUserRaw =
         sessionStorage.getItem("user") || localStorage.getItem("user") || null;
-    let initialUser = null;
-    try {
-        initialUser = initialUserRaw ? JSON.parse(initialUserRaw) : null;
-    } catch {
-        initialUser = null;
-    }
+
+    const initialUser = (() => {
+        try {
+            return initialUserRaw ? JSON.parse(initialUserRaw) : null;
+        } catch {
+            return null;
+        }
+    })();
 
     const [token, setToken] = useState(initialToken);
     const [user, setUser] = useState(initialUser);
