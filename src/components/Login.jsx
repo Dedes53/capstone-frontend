@@ -46,8 +46,13 @@ function Login() {
                 const token = data.token || data.accessToken;
                 if (!token) throw new Error("Token non presente nella risposta");
 
-                login(token);
-                navigate("/profile");
+                login({
+                    token,
+                    user: data.user || null,
+                    remember: false,
+                });
+
+                navigate("/profile", { replace: true });
             })
             .catch((err) => {
                 setError(err.message || "Errore durante il login");

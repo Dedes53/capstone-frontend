@@ -1,100 +1,53 @@
-import { createContext, useContext, useEffect, useMemo, useState, useCallback } from "react";
+import { createContext, useContext, useMemo, useState } from "react";
 
 const AuthContext = createContext(null);
-const TOKEN_KEY = "token";
-
-function parseJwtPayload(token) {
-    try {
-        const base64Url = token.split(".")[1];
-        if (!base64Url) return null;
-        const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
-        const jsonPayload = decodeURIComponent(
-            atob(base64)
-                .split("")
-                .map((c) => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2))
-                .join("")
-        );
-        return JSON.parse(jsonPayload);
-    } catch {
-        return null;
-    }
-}
-
-function isTokenExpired(token) {
-    if (!token) return true;
-    const payload = parseJwtPayload(token);
-    if (!payload?.exp) return true;
-    const nowSec = Math.floor(Date.now() / 1000);
-    return payload.exp <= nowSec;
-}
 
 export function AuthProvider({ children }) {
-    const [token, setTokenState] = useState(() => {
-        const saved = sessionStorage.getItem(TOKEN_KEY);
-        if (!saved) return null;
-        if (isTokenExpired(saved)) {
-            sessionStorage.removeItem(TOKEN_KEY);
-            return null;
-        }
-        return saved;
-    });
+    const initialToken =
+        sessionStorage.getItem("token") || localStorage.getItem("token") || null;
 
-    const logout = useCallback(() => {
-        sessionStorage.removeItem(TOKEN_KEY);
-        setTokenState(null);
-    }, []);
+    const initialUserRaw =
+        sessionStorage.getItem("user") || localStorage.getItem("user") || null;
+    let initialUser = null;
+    try {
+        initialUser = initialUserRaw ? JSON.parse(initialUserRaw) : null;
+    } catch {
+        initialUser = null;
+    }
 
-    const login = useCallback(
-        (newToken) => {
-            if (!newToken || isTokenExpired(newToken)) {
-                logout();
-                return false;
-            }
-            sessionStorage.setItem(TOKEN_KEY, newToken);
-            setTokenState(newToken);
-            return true;
-        },
-        [logout]
-    );
+    const [token, setToken] = useState(initialToken);
+    const [user, setUser] = useState(initialUser);
 
-    // auto-logout alla scadenza
-    useEffect(() => {
-        if (!token) return;
+    const login = ({ token: newToken, user: newUser = null, remember = false }) => {
+        sessionStorage.removeItem("token");
+        sessionStorage.removeItem("user");
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
 
-        const clearSession = () => {
-            sessionStorage.removeItem(TOKEN_KEY);
-            setTokenState(null);
-        };
-
-        const payload = parseJwtPayload(token);
-
-        if (!payload?.exp) {
-            clearSession();
-            return;
+        if (remember) {
+            localStorage.setItem("token", newToken);
+            if (newUser) localStorage.setItem("user", JSON.stringify(newUser));
+        } else {
+            sessionStorage.setItem("token", newToken);
+            if (newUser) sessionStorage.setItem("user", JSON.stringify(newUser));
         }
 
-        const msUntilExp = payload.exp * 1000 - Date.now();
+        setToken(newToken);
+        setUser(newUser);
+    };
 
-        if (msUntilExp <= 0) {
-            clearSession();
-            return;
-        }
-
-        const timer = setTimeout(() => {
-            clearSession();
-        }, msUntilExp);
-
-        return () => clearTimeout(timer);
-    }, [token]);
-
-    const isAuthenticated = useMemo(
-        () => Boolean(token && !isTokenExpired(token)),
-        [token]
-    );
+    const logout = () => {
+        sessionStorage.removeItem("token");
+        sessionStorage.removeItem("user");
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+        setToken(null);
+        setUser(null);
+    };
 
     const value = useMemo(
-        () => ({ token, login, logout, isAuthenticated }),
-        [token, login, logout, isAuthenticated]
+        () => ({ token, user, setToken, setUser, login, logout }),
+        [token, user]
     );
 
     return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
@@ -102,6 +55,6 @@ export function AuthProvider({ children }) {
 
 export function useAuth() {
     const ctx = useContext(AuthContext);
-    if (!ctx) throw new Error("useAuth deve essere usato dentro AuthProvider");
+    if (!ctx) throw new Error("useAuth must be used within AuthProvider");
     return ctx;
 }

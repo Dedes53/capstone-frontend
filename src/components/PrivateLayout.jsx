@@ -1,13 +1,13 @@
-import '../assets/css/PrivateLayout.css';
+import "../assets/css/PrivateLayout.css";
 
 import { Navigate, Outlet } from "react-router-dom";
-import { useAuth } from "../context/UseAuth";
+import { useAuth } from "../context/UseAuth.jsx";
 import SideBar from "./SideBar";
 
 function PrivateLayout() {
-    const { isAuthenticated } = useAuth();
+    const { token } = useAuth();
 
-    if (!isAuthenticated) return <Navigate to="/login" replace />;
+    if (!token) return <Navigate to="/login" replace />;
 
     return (
         <>
